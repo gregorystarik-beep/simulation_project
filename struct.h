@@ -2,6 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 typedef enum eventType
 {
 	new_order,
@@ -26,6 +27,8 @@ typedef struct Courier
 {
 	char id[10];
 	Courier_status status;
+	double individual_busy_time;
+	int individual_deliveries_count;
 }courier;
 static double total_busy_time =0;
 static  int total_delivers =0;
