@@ -24,12 +24,18 @@
     <ClInclude Include="HelperFucntions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="customer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HelperFunctions.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Courier.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="customer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

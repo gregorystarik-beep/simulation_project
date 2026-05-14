@@ -28,10 +28,11 @@ typedef struct Courier
 	char id[10];
 	Courier_status status;
 	double individual_busy_time;
+	double distance;
 	int individual_deliveries_count;
 }courier;
-static double total_busy_time =0;
-static  int total_delivers =0;
+static double total_busy_time;
+static  int total_delivers;
 //
 typedef enum Customer_status
 {
@@ -42,22 +43,23 @@ typedef struct Customer
 {
 	char* name;
 	int id, xCord, yCord;
+	int resX, resY;
 	customer_status status;
 }customer;
-static double total_waiting_time =0;
-static  int total_customers =0;
+static double total_waiting_time;
+static  int total_customers;
 //
 //
 typedef struct Order
 {
-	char* name;
+	char* food_name;
+	char* resturant;
 	int id, courierID, customerID;
-	double creation_time;
 	double delivery_time;
 }order;
 //
 typedef struct Node
 {
 	struct Node* next;
-	void*data;
+	void* data;
 }Node;

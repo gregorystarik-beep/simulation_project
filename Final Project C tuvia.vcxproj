@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Courier.h" />
+    <ClInclude Include="customer.h" />
     <ClInclude Include="HelperFucntions.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Courier.c" />
+    <ClCompile Include="customer.c" />
     <ClCompile Include="HelperFunctions.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,8 +1,10 @@
-
+#pragma once
 #include <stdio.h>
 #include "Courier.h"
 #include "struct.h"
 #include "HelperFucntions.h"
+double total_busy_time =0.0;
+int total_delivers =0;
 Node* init_couriers(int num_couriers)
 {
 	Node* head = NULL;
@@ -33,6 +35,9 @@ Node* init_couriers(int num_couriers)
 		new_node->data = temp;
 		new_courier = temp;
 		Generate_ID(new_courier->id);
+		new_courier->distance = 0.0;
+		new_courier->individual_busy_time = 0;
+		new_courier->individual_deliveries_count = 0;
 		new_courier->status = IDLE;
 		new_node->next = head;
 		head = new_node;
@@ -73,6 +78,8 @@ Node* remove_single_courier(Node* head, char target_id[])
 		curr = NULL;
 		return head;
 	}
+	prev = curr;
+	curr = curr->next;
 	while (curr != NULL)
 	{
 		temp = (courier*)curr->data;
@@ -105,15 +112,16 @@ void free_all_couriers(Node* head)
 		curr = next_node;
 	}
 }
-void update_courier_after_delivery(courier* specific_courier, double delivery_time)
+void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance)
 {
 	specific_courier->status = IDLE;
 	specific_courier->individual_deliveries_count++;
 	specific_courier->individual_busy_time += delivery_time;
 	total_busy_time += delivery_time;
+	specific_courier->distance += delivery_distance;
 	total_delivers++;
 }
-void print_couriers_stats(Node*head,FILE*log_file)
+void print_couriers_stats(Node* head, FILE* log_file)
 {
 	Node* curr = head;
 	courier* c = NULL;
@@ -122,15 +130,15 @@ void print_couriers_stats(Node*head,FILE*log_file)
 	while (curr != NULL)
 	{
 		c = (courier*)curr->data;
-		printf("Courier ID: %s | Deliveries: %d | Busy Time: %.2f min\n",
-			c->id, c->individual_deliveries_count, c->individual_busy_time);
+		printf("Courier ID: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
+			c->id, c->individual_deliveries_count, c->individual_busy_time, c->distance);
 
-		fprintf(log_file, "Courier ID: %s | Deliveries: %d | Busy Time: %.2f min\n",
-			c->id, c->individual_deliveries_count, c->individual_busy_time);
+		fprintf(log_file, "Courier ID: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
+			c->id, c->individual_deliveries_count, c->individual_busy_time, c->distance);
 		curr = curr->next;
 	}
 	printf("-------------------------------------------------------------------------\n");
-	fprintf(log_file,"-------------------------------------------------------------------------\n");
+	fprintf(log_file, "-------------------------------------------------------------------------\n");
 
 	printf("Total deliveries made: %d\n", total_delivers);
 	fprintf(log_file, "Total deliveries made: %d\n", total_delivers);
