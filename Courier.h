@@ -18,4 +18,6 @@ Node* remove_single_courier(Node* head, char target_id[]);
 // פונקציה להדפסת הסטטיסטיקות של כל השליחים בסיום הסימולציה
 void print_couriers_stats(Node* head, FILE* log_file);
 
+void print_courier(courier* specific_courier, FILE* log_file);
+
 void free_all_couriers(Node* head);

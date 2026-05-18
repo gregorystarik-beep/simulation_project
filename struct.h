@@ -15,6 +15,7 @@ typedef struct Event
 {
 	int order_number;
 	double time;
+	void* data;
 	eventType type;
 }event;
 //
@@ -37,12 +38,13 @@ static  int total_delivers;
 typedef enum Customer_status
 {
 	WAITING,
-	RECIVED
+	RECEIVED
 }customer_status;
 typedef struct Customer
 {
 	char* name;
-	int id, xCord, yCord;
+	char id[10];
+	int xCord, yCord;
 	int resX, resY;
 	customer_status status;
 }customer;

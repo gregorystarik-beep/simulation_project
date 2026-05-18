@@ -121,31 +121,74 @@ void update_courier_after_delivery(courier* specific_courier, double delivery_ti
 	specific_courier->distance += delivery_distance;
 	total_delivers++;
 }
+void print_courier(courier* specific_courier, FILE* log_file)
+{
+	char* status = "UNKNOWN";
+
+	if (specific_courier == NULL)return;
+	switch (specific_courier->status)
+	{
+	case IDLE:
+		status = "IDLE";
+		break;
+	case BUSY:
+		status = "BUSY";
+		break;
+	default:
+		status = "UNKNOWN";
+		break;
+	}
+	printf("Courier ID: %s | Status: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
+		specific_courier->id,
+		status,
+		specific_courier->individual_deliveries_count,
+		specific_courier->individual_busy_time,
+		specific_courier->distance);
+
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "Courier ID: %s | Status: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
+			specific_courier->id,
+			status,
+			specific_courier->individual_deliveries_count,
+			specific_courier->individual_busy_time,
+			specific_courier->distance);
+	}
+}
 void print_couriers_stats(Node* head, FILE* log_file)
 {
 	Node* curr = head;
 	courier* c = NULL;
 	printf("\n========== SIMULATION RESULTS ==========\n");
-	fprintf(log_file, "\n========== SIMULATION RESULTS ==========\n");
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "\n========== SIMULATION RESULTS ==========\n");
+	}
 	while (curr != NULL)
 	{
 		c = (courier*)curr->data;
-		printf("Courier ID: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
-			c->id, c->individual_deliveries_count, c->individual_busy_time, c->distance);
-
-		fprintf(log_file, "Courier ID: %s | Deliveries: %d | Busy Time: %.2f min | Distance: %.2f\n",
-			c->id, c->individual_deliveries_count, c->individual_busy_time, c->distance);
+		print_courier(c, log_file);
 		curr = curr->next;
 	}
 	printf("-------------------------------------------------------------------------\n");
-	fprintf(log_file, "-------------------------------------------------------------------------\n");
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "-------------------------------------------------------------------------\n");
+	}
 
 	printf("Total deliveries made: %d\n", total_delivers);
-	fprintf(log_file, "Total deliveries made: %d\n", total_delivers);
-
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "Total deliveries made: %d\n", total_delivers);
+	}
 	printf("Total busy time : %2.lf\n", total_busy_time);
-	fprintf(log_file, "Total busy time : %2.lf\n", total_busy_time);
-
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "Total busy time : %2.lf\n", total_busy_time);
+	}
 	printf("========================================\n");
-	fprintf(log_file, "========================================\n");
+	if (log_file != NULL)
+	{
+		fprintf(log_file, "========================================\n");
+	}
 }
