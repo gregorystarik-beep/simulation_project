@@ -6,9 +6,13 @@ double total_waiting_time =0.0;
 int total_customers = 0;
 customer* create_customer(char* name, char id[10], int xCord, int yCord, int resX, int resY)
 {
-	int len = 0;
+	size_t len = 0;
 	customer* new_cust = (customer*)malloc(sizeof(customer));
-	if (new_cust == NULL)return NULL;
+	if (new_cust == NULL)
+	{
+		fprintf(stderr, "0 customer\n");
+		return NULL;
+	}
 	len = strlen(name);
 	new_cust->name = (char*)calloc((len + 1), sizeof(char));
 	if (new_cust->name == NULL)
@@ -24,6 +28,8 @@ customer* create_customer(char* name, char id[10], int xCord, int yCord, int res
 	new_cust->resX = resX;
 	new_cust->resY = resY;
 	new_cust->status = WAITING;
+	new_cust->arrival_time = 0.0;
+	total_customers++;
 	return new_cust;
 }
 void free_customer(customer* specific_customer)
@@ -59,8 +65,12 @@ void update_customer_status(customer* specific_customer, customer_status new_sta
 void enqueue_customer(Node** head, customer* new_cust)
 {
 	Node* new_node = (Node*)malloc(sizeof(Node));
+	if (new_node == NULL)
+	{
+		fprintf(stderr, "ERROR\n");
+		return;
+	}
 	Node* current = *head;
-	if (new_node == NULL)return;
 	new_node->data = new_cust;
 	new_node->next = NULL;
 	if (*head == NULL)
@@ -78,7 +88,11 @@ customer* dequeue_customer(Node** head)
 {
 	Node* temp = NULL;
 	customer* first_cust = NULL;
-	if (*head == NULL)return NULL;
+	if (*head == NULL)
+	{
+		fprintf(stderr, "no queue of customers\n");
+		return NULL;
+	}
 	temp = *head;
 	first_cust = (customer*)temp->data;
 	*head = (*head)->next;
@@ -122,8 +136,12 @@ void free_customer_queue(Node** head)
 }
 void print_customer(customer* specific_customer, FILE* log_file)
 {
-	char* status = "UNKNOWN";
-	if (specific_customer == NULL)return;
+	const char* status = "UNKNOWN";
+	if (specific_customer == NULL)
+	{
+		fprintf(stderr, "no data\n");
+		return;
+	}
 	switch (specific_customer->status)
 	{
 	case WAITING:
@@ -131,6 +149,9 @@ void print_customer(customer* specific_customer, FILE* log_file)
 		break;
 	case RECEIVED:
 		status = "RECEIVED";
+		break;
+	case CANCELED:
+		status = "CANCELED";
 		break;
 	default:
 		status = "UNKNOWN";

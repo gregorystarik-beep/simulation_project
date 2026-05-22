@@ -11,7 +11,7 @@ courier* find_idle_courier(Node* head);
 
 // מופעלת כאשר שליח מסיים את המשלוח.
 // מעבירה את הסטטוס שלו בחזרה לפנוי, מקדמת את מונה המשלוחים ב-1, ומוסיפה את זמן השליחות לסך זמן העבודה שלו.
-void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance);
+void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance, int destX, int destY);
 // עוברת על מערך השליחים ומשחררת בצורה נקייה את הזיכרון הדינמי שהוקצה לשמות (char*).
 // לאחר מכן משחררת את הזיכרון של המערך עצמו כדי למנוע דליפות זיכרון בסיום התוכנית.
 Node* remove_single_courier(Node* head, char target_id[]);
@@ -21,3 +21,5 @@ void print_couriers_stats(Node* head, FILE* log_file);
 void print_courier(courier* specific_courier, FILE* log_file);
 
 void free_all_couriers(Node* head);
+
+courier* find_courier_by_id(Node* head, char id[10]);

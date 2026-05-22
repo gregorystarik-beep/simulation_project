@@ -129,13 +129,20 @@
   <ItemGroup>
     <ClInclude Include="Courier.h" />
     <ClInclude Include="customer.h" />
+    <ClInclude Include="event.h" />
+    <ClInclude Include="Simulation.h" />
     <ClInclude Include="HelperFucntions.h" />
+    <ClInclude Include="Order.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Courier.c" />
     <ClCompile Include="customer.c" />
+    <ClCompile Include="event.c" />
     <ClCompile Include="HelperFunctions.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="Order.c" />
+    <ClCompile Include="Simulation.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -17,7 +17,7 @@ Node* init_couriers(int num_couriers)
 		new_node = (Node*)malloc(sizeof(Node));
 		if (new_node == NULL)
 		{
-			printf("NO couriers\n");
+			fprintf(stderr,"NO couriers\n");
 			free(new_node);
 			new_node = NULL;
 			return NULL;
@@ -39,6 +39,8 @@ Node* init_couriers(int num_couriers)
 		new_courier->individual_busy_time = 0;
 		new_courier->individual_deliveries_count = 0;
 		new_courier->status = IDLE;
+		new_courier->currentX = rand() % 100;
+		new_courier->currentY = rand() % 100;
 		new_node->next = head;
 		head = new_node;
 	}
@@ -55,6 +57,23 @@ courier* find_idle_courier(Node* head)
 		{
 			temp_cour->status = BUSY;
 			return temp_cour;
+		}
+		curr = curr->next;
+	}
+	return NULL;
+}
+courier* find_courier_by_id(Node* head, char id[10])
+{
+	Node* curr = head;
+	int res = 0;
+	courier* curr_courier = NULL;
+	while (curr != NULL)
+	{
+		curr_courier = (courier*)curr->data;
+		res = strcmp(id, curr_courier->id);
+		if (res == 0)
+		{
+			return curr_courier;
 		}
 		curr = curr->next;
 	}
@@ -112,9 +131,11 @@ void free_all_couriers(Node* head)
 		curr = next_node;
 	}
 }
-void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance)
+void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance,int destX, int destY)
 {
 	specific_courier->status = IDLE;
+	specific_courier->currentX = destX;
+	specific_courier->currentY = destY;
 	specific_courier->individual_deliveries_count++;
 	specific_courier->individual_busy_time += delivery_time;
 	total_busy_time += delivery_time;
@@ -123,9 +144,13 @@ void update_courier_after_delivery(courier* specific_courier, double delivery_ti
 }
 void print_courier(courier* specific_courier, FILE* log_file)
 {
-	char* status = "UNKNOWN";
+	const char* status = "UNKNOWN";
 
-	if (specific_courier == NULL)return;
+	if (specific_courier == NULL)
+	{
+		fprintf(stderr, "no data\n");
+		return;
+	}
 	switch (specific_courier->status)
 	{
 	case IDLE:
