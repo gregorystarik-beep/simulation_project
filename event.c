@@ -1,6 +1,6 @@
 #include "struct.h"
 #include "event.h"
-event* create_event(eventType type, double time, int order_number, void* data)
+event* create_event(eventType type, double time, int order_number, void* data)//creates our event with void* so we can assign any veriable
 {
 	event* current_event = (event*)malloc(sizeof(event));
 	if (current_event == NULL)
@@ -13,8 +13,8 @@ event* create_event(eventType type, double time, int order_number, void* data)
 	current_event->order_number = order_number;
 	current_event->data = data;
 	return current_event;
-}
-void enqueue_event(Node** head, event* new_event)//Priority Queue
+}//Initializing all parameters
+void enqueue_event(Node** head, event* new_event)//Priority Queue works like normal queue but is orderded that first item is smallest item or in our case the clossets event using min heap
 {
 	Node* new_node = (Node*)malloc(sizeof(Node));
 	Node* curr = *head;
@@ -25,13 +25,13 @@ void enqueue_event(Node** head, event* new_event)//Priority Queue
 	}
 	new_node->data = new_event;
 	new_node->next = NULL;
-	if (*head == NULL||new_event->time<((event*)((*head)->data))->time)
+	if (*head == NULL||new_event->time<((event*)((*head)->data))->time)//checks to see if the new event smaller then head
 	{
 		new_node->next = *head;
 		*head = new_node;
 		return;
 	}
-	while ((curr->next != NULL)&&(((event*)((curr)->next->data))->time) <=new_event->time)
+	while ((curr->next != NULL)&&(((event*)((curr)->next->data))->time) <=new_event->time)//run in loop while we are not pointing to null and the new event is smaller then the current one
 	{
 		curr = curr->next;
 	}
@@ -54,7 +54,7 @@ event* dequeue_event(Node** head)//works like normal dequeue because we sorted t
 	temp = NULL;
 	return first_event;
 }
-event* peek_event(Node* head)
+event* peek_event(Node* head)//lets us peak to see which is the first event
 {
 	if (head == NULL)
 	{

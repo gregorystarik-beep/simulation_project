@@ -4,7 +4,7 @@
 #include <string.h>
 #include "struct.h"
 
-order* create_order(char order_id[10], const char* food, const char* rest, char cust_id[10], double current_time)
+order* create_order(char order_id[10], const char* food, const char* rest, char cust_id[10], double current_time)//creating the order 
 {
 	int len_food = 0, len_rest = 0;
 	order* new_order = (order*)malloc(sizeof(order));
@@ -33,18 +33,18 @@ order* create_order(char order_id[10], const char* food, const char* rest, char 
 	new_order->creation_time = current_time;
 	new_order->delivery_time = 0;
 	return new_order;
-}
+}////Initializing all parameters
 
-void assign_courier_to_order(order* specific_order, char cour_id[10])
+void assign_courier_to_order(order* specific_order, char cour_id[10])//assigning courier to order
 {
 	if (specific_order == NULL)
 	{
 		return;
 	}
-	strcpy(specific_order->courierID, cour_id);
+	strcpy(specific_order->courierID, cour_id);//we  uses strcpy to assign him 
 }
 
-void free_order(order* specific_order)
+void free_order(order* specific_order)//after the customer got the order we free the memory from the system
 {
 	if (specific_order != NULL)
 	{
@@ -57,7 +57,7 @@ void free_order(order* specific_order)
 	}
 }
 
-void print_order(order* specific_order, FILE* log_file)
+void print_order(order* specific_order, FILE* log_file)//we print the logs of the order
 {
 	if (specific_order == NULL)
 	{
@@ -85,7 +85,7 @@ void print_order(order* specific_order, FILE* log_file)
 			specific_order->delivery_time);
 	}
 }
-void enqueue_order(Node** head, order* new_order)
+void enqueue_order(Node** head, order* new_order)//using queue for all the linked list algorithm same fifo logic with dequeue
 {
 	Node* new_node = (Node*)malloc(sizeof(Node));
 	if (new_node == NULL)
@@ -123,7 +123,7 @@ order* dequeue_order(Node** head)
 	temp = NULL;
 	return first_order;
 }
-order* find_order_by_id(Node* head, char id[10])
+order* find_order_by_id(Node* head, char id[10])//if we need search the order by its id 
 {
 	Node* curr = head;
 	int res = 0;

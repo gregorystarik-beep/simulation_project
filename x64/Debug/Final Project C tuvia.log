@@ -1,5 +1,11 @@
-﻿  Simulation.c
+﻿  Courier.c
+  Order.c
+  Simulation.c
+C:\Users\grego\OneDrive\Desktop\repos\Final Project C tuvia\Final Project C tuvia\Order.c(16,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\grego\OneDrive\Desktop\repos\Final Project C tuvia\Final Project C tuvia\Order.c(17,13): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\grego\OneDrive\Desktop\repos\Final Project C tuvia\Final Project C tuvia\Simulation.c(286,40): warning C4090: 'function': different 'const' qualifiers
+  customer.c
+  event.c
   main.c
-C:\Users\grego\OneDrive\Desktop\repos\Final Project C tuvia\Final Project C tuvia\Simulation.c(285,40): warning C4090: 'function': different 'const' qualifiers
   Generating Code...
   Final Project C tuvia.vcxproj -> C:\Users\grego\OneDrive\Desktop\repos\Final Project C tuvia\x64\Debug\Final Project C tuvia.exe

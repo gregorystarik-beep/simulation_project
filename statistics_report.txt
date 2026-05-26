@@ -1,7 +1,7 @@
 --- Simulation Final Statistics ---
 Total Orders Handled: 15
 Successful Deliveries: 15
-Average Wait Time: 8.18 min
+Average Wait Time: 12.33 min
 -----------------------------------
 
 --- Couriers Summary ---

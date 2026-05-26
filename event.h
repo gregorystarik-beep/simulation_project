@@ -1,24 +1,24 @@
 #pragma once
 #include "struct.h"
 
-/* 1. יצירת אירוע חדש (הקצאת זיכרון ואתחול נתונים) */
+/* creating new event ) */
 event* create_event(eventType type, double time, int order_number, void* data);
 
-/* 2. הכנסת אירוע לתור - תור עדיפויות ממוין לפי זמן (מהזמן הקטן לגדול) */
+/* using priority queue for which event is the most important ) */
 void enqueue_event(Node** head, event* new_event);
 
-/* 3. שליפת האירוע הבא מהתור (תמיד יוציא את האירוע הקרוב ביותר בזמן) */
+/*  dequeuing the clossest evenrt */
 event* dequeue_event(Node** head);
 
-/* 4. שחרור זיכרון של אירוע בודד */
+/* free a single event */
 void free_event(event* specific_event);
 
-/* 5. שחרור כל תור האירועים מהזיכרון (בסיום הסימולציה) */
+/* frees al events*/
 void free_event_queue(Node** head);
 
-/* 6. פונקציית עזר להדפסת נתוני האירוע (חובה למעקב ודיבאגינג בקובץ הלוג) */
+/* 6. print the event to the log file */
 void print_event(event* specific_event, FILE* log_file);
-
+//to see which event is first now
 event* peek_event(Node* head);
 
 void print_event_queue(Node* head, FILE* log_file);

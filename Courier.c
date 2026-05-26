@@ -3,16 +3,16 @@
 #include "Courier.h"
 #include "struct.h"
 #include "HelperFucntions.h"
-double total_busy_time =0.0;
+double total_busy_time =0.0;//0 for global variables 
 int total_delivers =0;
-Node* init_couriers(int num_couriers)
+Node* init_couriers(int num_couriers)//allocates a specific ammount of couriers
 {
 	Node* head = NULL;
 	int i;
 	Node* new_node = NULL;
 	courier* temp = NULL;
 	courier* new_courier = NULL;
-	for (i = 0; i < num_couriers; ++i)
+	for (i = 0; i < num_couriers; ++i)//runs from zero the how many couries we have and puts it in a linked list
 	{
 		new_node = (Node*)malloc(sizeof(Node));
 		if (new_node == NULL)
@@ -43,26 +43,26 @@ Node* init_couriers(int num_couriers)
 		new_courier->currentY = rand() % 100;
 		new_node->next = head;
 		head = new_node;
-	}
+	}//Initializing all parameters
 	return head;
 }
-courier* find_idle_courier(Node* head)
+courier* find_idle_courier(Node* head)//find a free courier
 {
 	Node* curr = head;
 	courier* temp_cour = NULL;
 	while (curr != NULL)
 	{
 		temp_cour = (courier*)curr->data;
-		if (temp_cour->status == IDLE)
+		if (temp_cour->status == IDLE)//if he is not busy then we found him him and can give him a new order
 		{
 			temp_cour->status = BUSY;
 			return temp_cour;
 		}
 		curr = curr->next;
-	}
+	}//else couldnt find a free courier
 	return NULL;
 }
-courier* find_courier_by_id(Node* head, char id[10])
+courier* find_courier_by_id(Node* head, char id[10])//searches for a specific couriers 
 {
 	Node* curr = head;
 	int res = 0;
@@ -70,7 +70,7 @@ courier* find_courier_by_id(Node* head, char id[10])
 	while (curr != NULL)
 	{
 		curr_courier = (courier*)curr->data;
-		res = strcmp(id, curr_courier->id);
+		res = strcmp(id, curr_courier->id);//using strcmp to see if the ID matches
 		if (res == 0)
 		{
 			return curr_courier;
@@ -79,7 +79,7 @@ courier* find_courier_by_id(Node* head, char id[10])
 	}
 	return NULL;
 }
-Node* remove_single_courier(Node* head, char target_id[])
+Node* remove_single_courier(Node* head, char target_id[])//removes a single courier from list after he ended his shift
 {
 	int res = 0;
 	Node* curr = head;
@@ -115,7 +115,7 @@ Node* remove_single_courier(Node* head, char target_id[])
 		prev = curr;
 		curr = curr->next;
 	}
-	return head;
+	return head;//uses delete algorithm in linked list
 }
 void free_all_couriers(Node* head)
 {
@@ -129,7 +129,7 @@ void free_all_couriers(Node* head)
 		free(curr);
 		curr = NULL;
 		curr = next_node;
-	}
+	}//frees all couriers in the end of the day
 }
 void update_courier_after_delivery(courier* specific_courier, double delivery_time, double delivery_distance,int destX, int destY)
 {
@@ -141,7 +141,7 @@ void update_courier_after_delivery(courier* specific_courier, double delivery_ti
 	total_busy_time += delivery_time;
 	specific_courier->distance += delivery_distance;
 	total_delivers++;
-}
+}//after a courier finished his delivery we update his stats
 void print_courier(courier* specific_courier, FILE* log_file)
 {
 	const char* status = "UNKNOWN";
@@ -151,7 +151,7 @@ void print_courier(courier* specific_courier, FILE* log_file)
 		fprintf(stderr, "no data\n");
 		return;
 	}
-	switch (specific_courier->status)
+	switch (specific_courier->status)//using switch case with enums so we can print the status
 	{
 	case IDLE:
 		status = "IDLE";

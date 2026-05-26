@@ -4,37 +4,34 @@
 #include "Courier.h"
 customer* create_customer(char* name, char id[10], int xCord, int yCord, int resX, int resY);
 
-// שחרור הזיכרון של לקוח ספציפי (כולל השם)
+//frees a  specific customer after he got his order 
 void free_customer(customer* specific_customer);
 
-// עדכון סטטוס ללקוח
+// updates his status
 void update_customer_status(customer* specific_customer, customer_status new_status);
+//calculate distance from the restaurant to him
 double calculate_distance_time(customer* specific_customer);
 
 
-// חישוב המרחק/זמן בין נקודה מסוימת ללקוח
+//calculate delivery time from the restaurant to him
 double calculate_delivery_time(customer* specific_customer);
 
 // הדפסת פרטי לקוח
 void print_customer(customer* specific_customer, FILE* log_file);
 
 
-// ==========================================
-// 3. הצהרות: ניהול תור הלקוחות (רשימה מקושרת - מבוסס Head בלבד)
-// ==========================================
 
-// הוספת לקוח לסוף התור (ריצה עד סוף הרשימה והוספה)
+
+// using queue data base fro customers
 void enqueue_customer(Node** head, customer* new_cust);
-
-// שליפת הלקוח הראשון בתור (הוצאה מהראש ועדכון ה-head)
 customer* dequeue_customer(Node** head);
 
-// חיפוש לקוח בתור לפי תעודת זהות
+// finding customer through his ID
 customer* find_customer_by_id(Node* head, char id[10]);
 
-// הדפסת כל הלקוחות שממתינים כרגע בתור
+// prints statistics
 void print_customer_queue(Node* head, FILE* log_file);
 
-// מחיקת כל התור ושחרור הזיכרון של כל הלקוחות בתוכו
+// frees queue at the end of the day
 void free_customer_queue(Node** head);
 

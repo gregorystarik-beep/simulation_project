@@ -4,7 +4,7 @@
 #include <stdlib.h>
 double total_waiting_time =0.0;
 int total_customers = 0;
-customer* create_customer(char* name, char id[10], int xCord, int yCord, int resX, int resY)
+customer* create_customer(char* name, char id[10], int xCord, int yCord, int resX, int resY)//creating the customer
 {
 	size_t len = 0;
 	customer* new_cust = (customer*)malloc(sizeof(customer));
@@ -31,7 +31,7 @@ customer* create_customer(char* name, char id[10], int xCord, int yCord, int res
 	new_cust->arrival_time = 0.0;
 	total_customers++;
 	return new_cust;
-}
+}//Initializing all parameters
 void free_customer(customer* specific_customer)
 {
 	if (specific_customer != NULL)
@@ -41,12 +41,12 @@ void free_customer(customer* specific_customer)
 		free(specific_customer);
 		specific_customer = NULL;
 	}
-}
+}//freeing a specific_customer after he got his order
 double calculate_distance_time(customer* specific_customer)
 {
 	double res = sqrt(pow((specific_customer->resX - specific_customer->xCord), 2) + pow((specific_customer->resY - specific_customer->yCord), 2));
 	return res;
-}
+}//calculating the distance from restaurant to customer
 
 double calculate_delivery_time(customer* specific_customer)
 {
@@ -54,15 +54,15 @@ double calculate_delivery_time(customer* specific_customer)
 	double speed = (rand() % 81) + 20;
 	double time = res / speed;
 	return time;
-}
+}//using the the distance function we can calculate the time with the rand function for kmh
 void update_customer_status(customer* specific_customer, customer_status new_status)
 {
 	if (specific_customer != NULL)
 	{
 		specific_customer->status = new_status;
 	}
-}
-void enqueue_customer(Node** head, customer* new_cust)
+}//after we finished with we update the enum
+void enqueue_customer(Node** head, customer* new_cust)//using the queue data base with linked list so we can add the remove customers at ease
 {
 	Node* new_node = (Node*)malloc(sizeof(Node));
 	if (new_node == NULL)
@@ -84,7 +84,7 @@ void enqueue_customer(Node** head, customer* new_cust)
 	}
 	current->next = new_node;
 }
-customer* dequeue_customer(Node** head)
+customer* dequeue_customer(Node** head)//dequeuing with FIFO first customer who got his order is the first out
 {
 	Node* temp = NULL;
 	customer* first_cust = NULL;
@@ -98,7 +98,7 @@ customer* dequeue_customer(Node** head)
 	*head = (*head)->next;
 	free(temp);
 	temp = NULL;
-	return first_cust;
+	return first_cust;//we return the head because in a queue linked list when we want to remove an ite, we update only the head
 }
 customer* find_customer_by_id(Node* head, char id[10])
 {
@@ -116,7 +116,7 @@ customer* find_customer_by_id(Node* head, char id[10])
 		curr = curr->next;
 	}
 	return NULL;
-}
+}//using strcmp to find the customers ID 
 void free_customer_queue(Node** head)
 {
 	Node* curr = *head;

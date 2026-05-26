@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef enum eventType
+typedef enum eventType//enum for the type of ebent 
 {
 	new_order,
 	order_delivered,
@@ -12,7 +12,7 @@ typedef enum eventType
 	order_delayed,
 	order_canceled
 }eventType;
-typedef struct Event
+typedef struct Event//event struct 
 {
 	int order_number;
 	double time;
@@ -34,7 +34,7 @@ typedef struct Courier
 	int individual_deliveries_count;
 	int currentX;
 	int currentY;
-}courier;
+}courier;//couriers ID  his status his distance and x y coordinates
 static double total_busy_time;
 static  int total_delivers;
 //
@@ -55,7 +55,7 @@ typedef struct Customer
 }customer;
 static double total_waiting_time;
 static  int total_customers;
-//
+//name of the customer his ID  the coordinates of the restaurant he ordered from and his coordinates
 //
 typedef struct Order
 {
@@ -65,7 +65,7 @@ typedef struct Order
 	char courierID[10];
 	char customerID[10];
 	double creation_time, delivery_time;
-}order;
+}order;//keeps name the id number of the order
 //
 typedef struct Node
 {
@@ -74,28 +74,27 @@ typedef struct Node
 }Node;
 
 typedef struct {
-	/* שעון גלובלי ותורים (כמו שכתבת) */
+	//global watch to see the time in simulation
 	double current_time;
 	Node* order_queue;
 	Node* event_queue;
 	Node* customer_queue;
 
-	/* תשתית המרחקים (כמו שכתבת) */
+	//helps us to keep track distance
 	double** distance_matrix;
 	int total_locations;
 
-	/* ניהול השליחים (כמו שכתבת) */
+	//all our lists for the simulation
 	Node* couriers_list;
 	int total_couriers;
 
-	/* --- התוספות המומלצות --- */
 
-	/* קובץ תיעוד מרכזי */
+	//our file where put the logs of the simulation
 	FILE* log_file;
 
-	/* סטטיסטיקות לסוף הסימולציה */
-	int total_orders_handled;      /* סך ההזמנות שטופלו */
-	int successful_deliveries;     /* כמה הגיעו ליעדן בהצלחה */
-	double total_customer_wait;    /* מצטבר: סך זמן ההמתנה של כל הלקוחות */
+	/* statistics for the end of the simulation*/
+	int total_orders_handled;      /* total orders */
+	int successful_deliveries;     /* the that got the customer */
+	double total_customer_wait;    /* how many customer were */
 
 } Simulation;
