@@ -8,7 +8,7 @@
 #include <math.h>
 Simulation* init_simulation(int num_locations, int num_couriers, const char* log_filename)//we creates our Simulation
 {
-	int i,j;
+	int i, j;
 	Simulation* sim = (Simulation*)malloc(sizeof(Simulation));
 	if (sim == NULL)
 	{
@@ -84,14 +84,14 @@ void handle_new_order(Simulation* sim, event* current_event)//handles a new orde
 	double pickup_time = 0.0;
 	order* my_order = (order*)current_event->data;
 	customer* cust;
-	cust = find_customer_by_id(sim->customer_queue,my_order->customerID);//searches the customer who ordered
+	cust = find_customer_by_id(sim->customer_queue, my_order->customerID);//searches the customer who ordered
 	courier* found_courier = find_closest_courier(sim, cust->resX, cust->resY);//using a function that lets us find the clossest courier
 	if (found_courier != NULL)
 	{
 		found_courier->status = BUSY;//after that we change status to busy
 		assign_courier_to_order(my_order, found_courier->id);//we assign him the order
 		time = calculate_delivery_time(cust);
-		pickup_time=sim->current_time + time;//and update the pickup time
+		pickup_time = sim->current_time + time;//and update the pickup time
 		pickup_event = create_event(order_pickup, pickup_time, atoi(my_order->id), my_order);//creating new event 
 		if (pickup_event == NULL)
 		{
@@ -109,7 +109,7 @@ void handle_order_pickup(Simulation* sim, event* current_event)
 {
 	order* my_order = (order*)current_event->data;
 	customer* my_cust = NULL;
-	double travel_time = 0.0,event_time=0.0;
+	double travel_time = 0.0, event_time = 0.0;
 	int chance = rand() % 100;
 	event* next_event = NULL;
 	my_cust = find_customer_by_id(sim->customer_queue, my_order->customerID);
@@ -213,7 +213,7 @@ void handle_order_canceled(Simulation* sim, event* current_event)
 	customer* waiting_cust = NULL;
 	event* new_pickup_event = NULL;
 	double pickup_time = 0.0;
-	my_cust = find_customer_by_id(sim->customer_queue,my_order->customerID);
+	my_cust = find_customer_by_id(sim->customer_queue, my_order->customerID);
 	if (my_cust == NULL)
 	{
 		fprintf(stderr, "No customer\n");
@@ -250,7 +250,7 @@ void load_data_from_file(Simulation* sim, const char* filename)//loading data fr
 	double creation_time = 0.0;
 	order* n_order = NULL;
 	event* new_event = NULL;
-	FILE* fin = fopen(filename ,"r");
+	FILE* fin = fopen(filename, "r");
 	if (fin == NULL)
 	{
 		fprintf(stderr, "cannot open file\n");
@@ -258,13 +258,13 @@ void load_data_from_file(Simulation* sim, const char* filename)//loading data fr
 	}
 	while (fscanf(fin, "%s %s %s %s %lf", order_id, food, restaurant, cust_id, &creation_time) == 5)//we scan for order id restaurant and customer's id and creation time of order
 	{
-		n_order=create_order(order_id, food, restaurant, cust_id, creation_time);
+		n_order = create_order(order_id, food, restaurant, cust_id, creation_time);
 		if (n_order == NULL)
 		{
 			fprintf(stderr, "no order was created\n");
 			return;
 		}
-		new_event= create_event(new_order, creation_time, atoi(order_id), n_order);//and create a new event 
+		new_event = create_event(new_order, creation_time, atoi(order_id), n_order);//and create a new event 
 		if (new_event == NULL)
 		{
 			fprintf(stderr, "no event created\n");
@@ -398,8 +398,8 @@ void draw_city_map(Simulation* sim)
 	while (curr != NULL)
 	{
 		cust = (customer*)curr->data;
-		x = cust->resX/10;//using x and y as indexes on matrix
-		y = cust->resY/10;
+		x = cust->resX / 10;//using x and y as indexes on matrix
+		y = cust->resY / 10;
 		if (x >= 0 && x < 10 && y >= 0 && y < 10)map[x][y] = 'R';//puts Restaurant if its in matrix
 		if (cust->status == WAITING)
 		{
@@ -422,7 +422,7 @@ void draw_city_map(Simulation* sim)
 		}
 		curr = curr->next;
 	}
-	printf("\n============= CITY MAP (T=%.2f) =============\n", sim->current_time);
+	printf("\n============= CITY MAP (T=%.2f) =============\x1b[K\n", sim->current_time);
 	for (i = 0; i < 10; i++)
 	{
 		printf("  ");
@@ -430,9 +430,7 @@ void draw_city_map(Simulation* sim)
 		{
 			printf("%c  ", map[i][j]);
 		}
-		printf("\n");
+		printf("\x1b[K\n"); 
 	}
-	printf("===============================================\n\n");
+	printf("===============================================\x1b[K\n");
 }
-
-
