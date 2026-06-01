@@ -336,11 +336,11 @@ void save_statistics_to_file(Simulation* sim, const char* filename)
 		avg_wait = sim->total_customer_wait / sim->successful_deliveries;
 	}
 	fprintf(fin, "--- Simulation Final Statistics ---\n");
+	fprintf(fin, "--- Couriers Summary ---\n");
 	fprintf(fin, "Total Orders Handled: %d\n", sim->total_orders_handled);
 	fprintf(fin, "Successful Deliveries: %d\n", sim->successful_deliveries);
 	fprintf(fin, "Average Wait Time: %.2f min\n", avg_wait);
 	fprintf(fin, "-----------------------------------\n\n");
-	fprintf(fin, "--- Couriers Summary ---\n");
 	curr = sim->couriers_list;
 	while (curr != NULL)
 	{
@@ -430,7 +430,7 @@ void draw_city_map(Simulation* sim)
 		{
 			printf("%c  ", map[i][j]);
 		}
-		printf("\x1b[K\n"); 
+		printf("\x1b[K\n");
 	}
 	printf("===============================================\x1b[K\n");
 }
