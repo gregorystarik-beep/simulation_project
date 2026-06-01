@@ -53,33 +53,34 @@ int main()
 
     event* curr_event = NULL;
     event* upcoming = NULL;
+    int is_paused = 0;
 
     //runs on events 
     while (sim->event_queue != NULL)
     {
         if (_kbhit()) // check if was a keyboard click
         {
-            char key = _getch(); 
+            char key = _getch();
             if (key == ' ')
             {
-                printf("\x1b[33m\n[!] SIMULATION PAUSED. Press SPACE to resume...\x1b[0m\n");
-                fflush(stdout);
+                is_paused = !is_paused;
 
-                while (1)
+                if (is_paused)
                 {
-                    if (_kbhit())
-                    {
-                        char resume_key = _getch();
-                        if (resume_key == ' ')
-                        {
-                            printf("\x1b[32m[!] SIMULATION RESUMED.\x1b[0m\n\n");
-                            fflush(stdout);
-                            break;
-                        }
-                    }
-                    Sleep(100); 
+                    printf("\x1b[33m\n[!] SIMULATION PAUSED. Press SPACE to resume...\x1b[0m\n");
                 }
+                else
+                {
+                    printf("\x1b[32m[!] SIMULATION RESUMED.\x1b[0m\n\n");
+                }
+                fflush(stdout);
             }
+        }
+
+        if (is_paused)
+        {
+            Sleep(100); 
+            continue;   
         }
 
         upcoming = peek_event(sim->event_queue);//lets us see the upcoming event 
